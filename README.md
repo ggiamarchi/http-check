@@ -1,5 +1,7 @@
 # HTTP Check
 
+[![Build Status](https://api.travis-ci.org/ggiamarchi/http-check.png?branch=master)](https://travis-ci.org/ggiamarchi/http-check)
+
 HTTP Check is a simple tool that execute exposes any system command with a single HTTP endpoint. HTTP response code
 differs depending command status code.
 
