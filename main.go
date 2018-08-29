@@ -97,8 +97,6 @@ func api(appConfig *appConfig) *gin.Engine {
 
 		check := checks[c.Param("name")]
 
-		logger.Info("%s - %s - %v", check.Name, check.Command.Executable, check.Command.Args)
-
 		stdout, stderr, err := execCommand(check.Command.Executable, check.Command.Args...)
 
 		responseCode := check.Status.Success
