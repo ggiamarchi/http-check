@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"os/exec"
 	"strings"
 	"time"
 
 	"github.com/ggiamarchi/http-check/logger"
 	"github.com/gin-gonic/gin"
+	cli "github.com/jawher/mow.cli"
 	yaml "gopkg.in/yaml.v2"
 )
 
@@ -54,16 +56,30 @@ func (c *appConfig) String() string {
 }
 
 func main() {
-	logger.Info("Starting HTTP Check server...")
-	appConfig := loadAppConfig("/Users/guillaume/gopath/src/github.com/ggiamarchi/http-check/http-check.yml")
 
-	s := &http.Server{
-		Addr:         fmt.Sprintf(":%d", appConfig.Server.Port),
-		Handler:      api(appConfig),
-		ReadTimeout:  30 * time.Second,
-		WriteTimeout: 30 * time.Second,
-	}
-	s.ListenAndServe()
+	app := cli.App("http-check", "HTTP Check exposes system commands as a single HTTP endpoint")
+
+	app.Command("server", "Run HTTP Check server", func(cmd *cli.Cmd) {
+
+		var configFile = cmd.StringOpt("c config", "/etc/http-check/http-check.yml", "HTTP Check YAML configuration file")
+
+		cmd.Action = func() {
+			logger.Init(false)
+			logger.Info("Starting HTTP Check server...")
+
+			appConfig := loadAppConfig(*configFile)
+
+			s := &http.Server{
+				Addr:         fmt.Sprintf(":%d", appConfig.Server.Port),
+				Handler:      api(appConfig),
+				ReadTimeout:  30 * time.Second,
+				WriteTimeout: 30 * time.Second,
+			}
+			s.ListenAndServe()
+		}
+	})
+
+	app.Run(os.Args)
 }
 
 func api(appConfig *appConfig) *gin.Engine {
@@ -80,8 +96,6 @@ func api(appConfig *appConfig) *gin.Engine {
 	v1.GET("/check/:name", func(c *gin.Context) {
 
 		check := checks[c.Param("name")]
-
-		logger.Info("%s - %s - %v", check.Name, check.Command.Executable, check.Command.Args)
 
 		stdout, stderr, err := execCommand(check.Command.Executable, check.Command.Args...)
 
