@@ -11,3 +11,15 @@ script:
   - GOOS=linux  GOARCH=amd64 go build -o http-check-linux-amd64
   - GOOS=linux  GOARCH=arm   go build -o http-check-linux-arm
   - GOOS=darwin GOARCH=amd64 go build -o http-check-darwin-amd64
+
+deploy:
+  provider: releases
+  api_key:
+    secure: FTGVKI1h1Lpk1oz7UaCwyd9N9AY0Fe4/ce56naMwPcfUViJWbKKbP6ze3dl8ec4llI8fhLaW/Jh/02usx6Ja93snFufXgGODbNVhu7VnCJ5HYWsCKR6GbNrjZWUl8aqN95aoqkWCOekUcOR0IYs0G5JFog6ueSmHTU/cN5RA/ZuhL6CnqnTPt6/HCOVzd4GNBsUi50AK+m9nb/1Jbe8jY97iWhzIcagHM0xlLVk0kiYN+/L3cBjtP1hDJkRBvAZ+plXRhfpKC2yjt5h0+YH5DO53mZ+XAxP7l7iXxFgkfxTyHML/DdUwGoiLxG7h3ztJhsLT6YiB3uZdYcz7atOINVJkhdKUgjjf6Oqll2Uyj8R2PGLA3Coig/zjtAe9SkFgf0t71tihVOfZc6dbJrb8RUj2reWJZQONDVjG0ulVn+0a3MU21DJTkls7KwSVK/fV+bQ7BYRBlzLAY7hIGwRDGSoujqriyUc8SZEHOmOigV0ysyIz2Ochd9nELeY9aeVFtwzat0yFKq4noemJw7rNY/MEoYPT5BHu+bVoKi7oNKsu0Sr5ZT5ugpZrjVO4oUaxp4WQX8PTV3kukHtmOvAxVo0yxv/SMGE+NJy6T78lrftfj4lEwRxMB5F3LMnez7M8eABL4YTHRzqi0DOG5byVXK9cNw1E8s5Nlez4AOmq0WE=
+  skip_cleanup: true
+  file:
+    - http-check-linux-amd64
+    - http-check-linux-arm
+    - http-check-darwin-amd64
+  on:
+    tags: true
