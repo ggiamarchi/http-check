@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/ggiamarchi/http-check/logger"
-	"gopkg.in/gin-gonic/gin.v1"
+	"github.com/gin-gonic/gin"
 	yaml "gopkg.in/yaml.v2"
 )
 
