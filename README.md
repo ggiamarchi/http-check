@@ -7,8 +7,6 @@ differs depending command status code.
 
 ## Configuration
 
-Configuration must stand in `/etc/http-check/http-check.yml`.
-
 Here is an sample configuration file :
 
 ```yaml
@@ -34,12 +32,23 @@ server:
   port: 2323
 ```
 
+## Installation
+
+1. Download http-check binary from github release
+2. Create configuration file. Default location is `/etc/http-check/http-check.yml`. You can specificy custom location on the command line when running the server
+
 ## Run the server
 
 Basically run the binary
 
 ```
-$ http-server
+$ http-check server
+```
+
+Or, with a custom configuration file location
+
+```
+$ http-check server --config /etc/http-check.yml
 ```
 
 ## Run checks
