@@ -44,7 +44,7 @@ $ http-server
 
 Clients use a single endpoint to run any check.
 
-### API specification
+__Request__
 
 ```
 GET /v1/check/{name}
@@ -52,6 +52,7 @@ GET /v1/check/{name}
 
 __Response__
 
+```
 HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
 Date: Wed, 29 Aug 2018 13:18:13 GMT
@@ -62,6 +63,7 @@ Content-Length: 350
     "stderr":"",
     "stdout":"PING 8.8.8.8 (8.8.8.8): 56 data bytes\n64 bytes from 8.8.8.8: icmp_seq=0 ttl=121 time=12.676 ms\n64 bytes from 8.8.8.8: icmp_seq=1 ttl=121 time=20.267 ms\n\n--- 8.8.8.8 ping statistics ---\n2 packets transmitted, 2 packets received, 0.0% packet loss\nround-trip min/avg/max/stddev = 12.676/16.471/20.267/3.796 ms\n"
 }
+```
 
 __NB.__ Status code depends the YAML check configuration.
 
