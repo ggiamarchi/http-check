@@ -1,0 +1,13 @@
+language: go
+
+sudo: false
+
+go:
+  - 1.10
+  - 1.11
+  - tip
+
+script:
+  - GOOS=linux  GOARCH=amd64 go build -o http-check-linux-amd64
+  - GOOS=linux  GOARCH=arm   go build -o http-check-linux-arm
+  - GOOS=darwin GOARCH=amd64 go build -o http-check-darwin-amd64
